@@ -2,9 +2,8 @@
  * Handler encargado de calcular el scoring del Lead
  * en base a la configuración activa de KZ Scoring.
  *
- * Se ejecuta desde el trigger.
  *
- * @author Manuel Cerioni
+ * @author Manuel PEPE
  * @version 2.0.1
  */
 public with sharing class KZ_LeadScoringHandler {

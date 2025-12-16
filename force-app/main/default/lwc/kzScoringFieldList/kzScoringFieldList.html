@@ -1,0 +1,22 @@
+<template>
+    <!-- FIX 1: Se elimina el lightning-card. El título principal viene del Manager. -->
+    <div class="slds-p-around_medium">
+        
+        <!-- Botón Nuevo Campo a la derecha, al nivel del inicio de la tabla. -->
+        <div class="slds-grid slds-grid_align-end slds-m-bottom_small">
+            <lightning-button label="Nuevo Campo" variant="brand" onclick={handleNew} icon-name="utility:add"></lightning-button>
+        </div>
+
+        <template if:true={items}>
+            <lightning-datatable
+                data={items}
+                columns={columns}
+                key-field="Id"
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </template>
+        <template if:false={items}>
+            <p>No hay campos de scoring definidos para esta configuración.</p>
+        </template>
+    </div>
+</template>

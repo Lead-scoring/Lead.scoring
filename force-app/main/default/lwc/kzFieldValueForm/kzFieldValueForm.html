@@ -1,0 +1,138 @@
+<template>
+    <!-- FIX 2: Se elimina el lightning-card principal para eliminar el título duplicado. -->
+    <div class="slds-p-around_medium">
+        
+        <!-- Contenedor del botón "Nuevo Valor" (Alineado a la derecha) -->
+        <div class="slds-m-bottom_small slds-grid slds-grid_align-end">
+            <template if:true={showNewValueButton}>
+                <lightning-button label="Nuevo Valor" variant="brand" onclick={handleNew} icon-name="utility:add"></lightning-button>
+            </template>
+        </div>
+
+        <template if:true={values}>
+            <lightning-datatable
+                data={values}
+                columns={columns}
+                key-field="Id"
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </template>
+        <template if:true={isLoading}>
+            <div class="slds-m-top_small slds-text-align_center">
+                <lightning-spinner alternative-text="Cargando" size="small"></lightning-spinner>
+                <p>Cargando valores...</p>
+            </div>
+        </template>
+        <template if:true={noValues}>
+            <div class="slds-m-top_small slds-text-align_center slds-text-color_weak">
+                No hay valores definidos para este campo.
+            </div>
+        </template>
+    </div>
+    
+    <!-- Modal INTERNO: form para crear / editar (Tamaño ajustado a medium) -->
+    <template if:true={showForm}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container slds-modal_medium">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">{formTitle} ({parentFieldTypeLabel})</h2>
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Cerrar" onclick={closeForm} class="slds-modal__close"></lightning-button-icon>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" style="min-height: 250px; overflow: auto;">
+                    
+                    <!-- VISTA 1: TEXTO (Punto 1) -->
+                    <template if:true={isText}>
+                        <div class="slds-text-heading_small slds-m-bottom_small">Configuración de Valor de Texto</div>
+                        
+                        <lightning-input label="Valor a evaluar" value={valueText} onchange={handleValueText} required></lightning-input>
+                        
+                        <div class="slds-m-top_small slds-p-bottom_small slds-border_bottom">
+                            <lightning-input type="checkbox" label="Coincidencia exacta" checked={exactMatch} onchange={handleExactMatch}></lightning-input>
+                            <div class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                <template if:true={exactMatch}>Se requiere coincidencia exacta (Valor = Lead Value).</template>
+                                <template if:false={exactMatch}>Contiene el valor (Lead Value CONTIENE Valor).</template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- VISTA 2: CHECKBOX (Punto 2) -->
+                    <template if:true={isCheckbox}>
+                        <div class="slds-text-heading_small slds-m-bottom_small">Configuración de Valor de Checkbox</div>
+                        <p class="slds-text-color_weak slds-m-bottom_medium">Solo debe configurar los puntajes para True y False.</p>
+
+                        <template if:true={availableCheckboxOptions.length}>
+                            <lightning-combobox
+                                label="Valor de Checkbox"
+                                value={valueText}
+                                options={availableCheckboxOptions}
+                                onchange={handleValueText}
+                                placeholder="Seleccione True o False"
+                                required>
+                            </lightning-combobox>
+                        </template>
+                         <template if:false={availableCheckboxOptions.length}>
+                            <div class="slds-text-color_success slds-text-align_center">
+                                Todos los valores (True y False) ya están configurados. Utilice Editar.
+                            </div>
+                        </template>
+                    </template>
+                    
+                    <!-- VISTA 3: PICKLIST (Punto 3) -->
+                    <template if:true={isPicklist}>
+                         <div class="slds-text-heading_small slds-m-bottom_small">Configuración de Valor de Picklist</div>
+
+                        <template if:true={availablePicklistOptions.length}>
+                            <lightning-combobox
+                                label="Opción de Picklist"
+                                value={picklistApi}
+                                options={availablePicklistOptions}
+                                onchange={handlePicklistApi}
+                                placeholder="Seleccione una opción de la lista"
+                                required>
+                            </lightning-combobox>
+                        </template>
+                        <template if:false={availablePicklistOptions.length}>
+                            <div class="slds-text-color_success slds-text-align_center">
+                                No quedan opciones de Picklist sin puntuar o no se encontraron valores en el campo.
+                            </div>
+                        </template>
+                        
+                        <div class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                            El puntaje solo se aplicará si el Lead tiene seleccionado este valor.
+                        </div>
+                    </template>
+                    
+                    <!-- Campos Comunes -->
+                    <lightning-input label="Puntaje Otorgado" type="number" value={score} onchange={handleScore} required min="0" class="slds-m-top_medium"></lightning-input>
+                    <lightning-input type="checkbox" label="Activo" checked={active} onchange={handleActive} class="slds-m-top_small"></lightning-input>
+                </div>
+                
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Guardar" onclick={save} icon-name="utility:save"></lightning-button>
+                    <lightning-button label="Cancelar" onclick={closeForm} class="slds-m-left_small"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- Modal: confirm delete -->
+    <template if:true={showDeleteConfirm}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container slds-modal_small">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Confirmar eliminación</h2>
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Cerrar" onclick={cancelDelete} class="slds-modal__close"></lightning-button-icon>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>¿Está seguro de eliminar el valor "<strong>{deleteCandidateLabel}</strong>"? Esta acción es irreversible.</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="destructive" label="Eliminar" onclick={confirmDelete} icon-name="utility:delete"></lightning-button>
+                    <lightning-button label="Cancelar" onclick={cancelDelete} class="slds-m-left_small"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

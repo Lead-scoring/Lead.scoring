@@ -1,0 +1,119 @@
+<template>
+    <lightning-card title="Gestor de Configuración de Lead Scoring Dinámico" icon-name="utility:setup_modal">
+        <div class="slds-p-around_medium">
+            <c-kz-scoring-list
+                onnewconfig={onNewConfigFromList}
+                oneditconfig={onEditConfigFromList}
+                onviewitems={onViewItemsFromList}
+                ondeleteconfig={onDeleteConfigFromList}>
+            </c-kz-scoring-list>
+        </div>
+    </lightning-card>
+
+    <!-- MODAL PRINCIPAL -->
+    <template if:true={currentModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open"
+                 style="display:flex; align-items:center; justify-content:center;">
+            <div class={modalContainerClass} style="max-height:90vh; overflow:hidden;">
+                <header class="slds-modal__header">
+                    <!-- Botón Volver eliminado del Header -->
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center" style="width:100%">
+                        <h2 class="slds-modal__title slds-text-heading_medium">{modalTitle}</h2>
+                        <div class="slds-m-right_medium"></div> 
+                    </div>
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Cerrar"
+                        onclick={handleCloseModal} class="slds-modal__close">
+                    </lightning-button-icon>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium slds-scrollable_y" style="max-height:70vh;">
+                    <template if:true={isConfigModal}>
+                        <c-kz-scoring-form config-id={modalContext.configId} onsaved={handleConfigSaved} oncancel={handleChildCancel}></c-kz-scoring-form>
+                    </template>
+
+                    <template if:true={isItemsModal}>
+                        <c-kz-scoring-field-list scoring-id={modalContext.configId} onnewitem={handleNewField} onedititem={handleEditField} onopenvalues={handleOpenValues} ondeleteitem={handleDeleteField}></c-kz-scoring-field-list>
+                    </template>
+
+                    <template if:true={isFieldModal}>
+                        <c-kz-dynamic-field-form scoring-id={modalContext.configId} field-id={modalContext.fieldId} onsaved={handleFieldSaved} oncancel={handleChildCancel}></c-kz-dynamic-field-form>
+                    </template>
+
+                    <template if:true={isValuesModal}>
+                        <c-kz-field-value-form field-id={modalContext.fieldId} onsaved={handleValuesSaved} oncancel={handleChildCancel}></c-kz-field-value-form>
+                    </template>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    
+                    <!-- VISTAS ANIDADAS CON BOTÓN VOLVER (isFieldModal, isValuesModal) -->
+                    <template if:true={showBackButton}>
+                         <!-- FIX 3: Botón Cerrar a la izquierda del grupo, Volver a la derecha -->
+                         <div class="slds-grid slds-grid_align-spread slds-size_1-of-1">
+                            <!-- Botón de Cerrar (izquierda, en el recuadro rojo que marcaste) -->
+                            <div class="slds-col slds-size_1-of-2 slds-grid slds-grid_align-start"> 
+                                <lightning-button label="Cerrar" onclick={handleCloseModal}></lightning-button>
+                            </div>
+
+                            <!-- Botón de Volver (derecha) -->
+                            <div class="slds-col slds-grid slds-grid_align-end slds-size_1-of-2">
+                                <lightning-button label="Volver" variant="neutral" onclick={handleBack}></lightning-button>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <!-- VISTAS SIN BOTÓN VOLVER (PRINCIPALES: ConfigModal, ItemsModal) -->
+                    <template if:false={showBackButton}>
+                        <div class="slds-grid slds-grid_align-end slds-size_1-of-1">
+                            <lightning-button label="Cerrar" onclick={handleCloseModal}></lightning-button>
+                        </div>
+                    </template>
+
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- CONFIRM DELETE CONFIG -->
+    <template if:true={showDeleteConfigConfirm}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open"
+                 style="display:flex; align-items:center; justify-content:center;">
+            <div class="slds-modal__container" style="width:35vw; max-width:500px;">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Confirmar eliminación</h2>
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Cerrar" onclick={cancelDeleteConfig} class="slds-modal__close"></lightning-button-icon>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>¿Eliminar la configuración "<strong>{deleteConfigLabel}</strong>"?</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="destructive" label="Eliminar" onclick={confirmDeleteConfig}></lightning-button>
+                    <lightning-button label="Cancelar" onclick={cancelDeleteConfig} class="slds-m-left_small"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- CONFIRM DELETE ITEM -->
+    <template if:true={showDeleteItemConfirm}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open"
+                 style="display:flex; align-items:center; justify-content:center;">
+            <div class="slds-modal__container" style="width:35vw; max-width:500px;">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Confirmar eliminación</h2>
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Cerrar" onclick={cancelDeleteItem} class="slds-modal__close"></lightning-button-icon>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>¿Eliminar el campo "<strong>{deleteItemLabel}</strong>"?</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="destructive" label="Eliminar" onclick={confirmDeleteItem}></lightning-button>
+                    <lightning-button label="Cancelar" onclick={cancelDeleteItem} class="slds-m-left_small"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

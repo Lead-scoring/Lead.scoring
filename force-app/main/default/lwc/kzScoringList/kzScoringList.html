@@ -1,0 +1,9 @@
+<template>
+    <div class="slds-m-bottom_small">
+        <lightning-button label="Nueva Configuración" variant="brand" onclick={handleNew}></lightning-button>
+    </div>
+
+    <template if:true={configs}>
+        <lightning-datatable key-field="Id" data={configs} columns={columns} onrowaction={handleRowAction}></lightning-datatable>
+    </template>
+</template>

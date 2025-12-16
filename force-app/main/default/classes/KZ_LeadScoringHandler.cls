@@ -5,7 +5,7 @@
  * Se ejecuta desde el trigger.
  *
  * @author Manuel Cerioni
- * @version 2.0.1
+ * @version 2.0.2
  */
 public with sharing class KZ_LeadScoringHandler {
 

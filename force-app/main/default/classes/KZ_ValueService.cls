@@ -1,15 +1,20 @@
 /**
- * Servicio para manejar los valores de scoring (kzScoringValue__c)
- * asociados a un ítem de scoring.
+ * Servicio para manejar los valores de scoring
+ * asociados a un ítem (kzScoringValue__c).
+ *
+ * Se usa desde los LWCs de configuración.
+ *
+ * @author Manuel Cerioni
+ * @version 1.0.0
  */
 public with sharing class KZ_ValueService {
 
-    /**
-     * Devuelve los valores asociados a un ítem de scoring.
-     */
+    /* ========================= VALUES ========================= */
+
     @AuraEnabled(cacheable=true)
     public static List<kzScoringValue__c> getValuesByItem(Id itemId) {
 
+        // Si no hay item -> lista vacía
         if (itemId == null) {
             return new List<kzScoringValue__c>();
         }
@@ -30,12 +35,10 @@ public with sharing class KZ_ValueService {
         ];
     }
 
-    /**
-     * Guarda o actualiza una lista de valores de scoring.
-     */
     @AuraEnabled
     public static List<kzScoringValue__c> saveValues(List<kzScoringValue__c> values) {
 
+        // Si no hay valores -> no hace nada
         if (values == null || values.isEmpty()) {
             return new List<kzScoringValue__c>();
         }
@@ -43,6 +46,7 @@ public with sharing class KZ_ValueService {
         List<kzScoringValue__c> toInsert = new List<kzScoringValue__c>();
         List<kzScoringValue__c> toUpdate = new List<kzScoringValue__c>();
 
+        // Separa nuevos de existentes
         for (kzScoringValue__c val : values) {
             if (val.Id == null) {
                 toInsert.add(val);
@@ -62,9 +66,6 @@ public with sharing class KZ_ValueService {
         return values;
     }
 
-    /**
-     * Elimina un valor de scoring.
-     */
     @AuraEnabled
     public static void deleteValue(Id valueId) {
 

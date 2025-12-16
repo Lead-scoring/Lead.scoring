@@ -13,18 +13,14 @@ public with sharing class KZ_LeadScoringHandler {
     private static final String TOKEN_IS_EMPTY = '__IS_EMPTY__';
     private static final String TOKEN_IS_NOT_EMPTY = '__IS_NOT_EMPTY__';
 
-    /**
-     * Firma antigua por compatibilidad (oldMap no se usa).
-     */
+    // Firma vieja -> se mantiene por compatibilidad
     public static void applyScoring(List<Lead> newList, Map<Id, Lead> oldMap) {
         applyScoring(newList);
     }
 
-    /**
-     * Aplica el cálculo de scoring a los Leads.
-     */
     public static void applyScoring(List<Lead> newList) {
 
+        // Si no hay leads -> no hace nada
         if (newList == null || newList.isEmpty()) {
             return;
         }
@@ -39,17 +35,16 @@ public with sharing class KZ_LeadScoringHandler {
 
         List<kzItemScoring__c> items = getActiveItems(scoring.Id);
 
-        // Si no hay items activos -> 100%
+        // Si no hay ítems -> 100%
         if (items.isEmpty()) {
             writeDefaultScore(newList);
             return;
         }
 
         Map<Id, List<kzScoringValue__c>> valuesByItem = getValuesByItem(items);
-
         List<kzItemScoring__c> validItems = filterItemsWithValues(items, valuesByItem);
 
-        // Si ningún item tiene valores -> 100%
+        // Si ningún ítem tiene valores -> 100%
         if (validItems.isEmpty()) {
             writeDefaultScore(newList);
             return;
@@ -64,6 +59,7 @@ public with sharing class KZ_LeadScoringHandler {
 
             for (kzItemScoring__c item : validItems) {
 
+                // Si el campo no existe en Lead -> se ignora
                 if (String.isBlank(item.kzLeadFieldApi__c) ||
                     !leadFields.containsKey(item.kzLeadFieldApi__c)) {
                     continue;
@@ -152,6 +148,7 @@ public with sharing class KZ_LeadScoringHandler {
 
     private static Decimal calculatePmpTotal(kzScoring__c scoring, List<kzItemScoring__c> items) {
 
+        // Si hay override -> usarlo
         if (scoring.kzPMPTotalOverride__c != null &&
             scoring.kzPMPTotalOverride__c > 0) {
             return scoring.kzPMPTotalOverride__c;
@@ -224,12 +221,12 @@ public with sharing class KZ_LeadScoringHandler {
 
         for (kzScoringValue__c v : values) {
 
-            Boolean matched = false;
+            Boolean matched;
 
             if (type == 'PICKLIST') {
                 matched = matchPicklist(leadText, v);
             } else if (type == 'CHECKBOX') {
-                matched = matchCheckbox(leadBool, leadText, v);
+                matched = matchCheckbox(leadBool, v);
             } else if (type == 'NUMBER') {
                 matched = matchNumber(leadNumber, v.kzValueText__c);
             } else {
@@ -253,7 +250,7 @@ public with sharing class KZ_LeadScoringHandler {
         return false;
     }
 
-    private static Boolean matchCheckbox(Boolean leadBool, String leadText, kzScoringValue__c v) {
+    private static Boolean matchCheckbox(Boolean leadBool, kzScoringValue__c v) {
         if (leadBool == null) return false;
         Boolean value = v.kzValueText__c == 'true' || v.kzValueText__c == '1';
         return leadBool == value;

@@ -1,13 +1,27 @@
+/**
+ * Service encargado de administrar la configuración del Scoring.
+ *
+ * Se usa principalmente desde LWCs para:
+ * - gestionar configuraciones
+ * - ítems de scoring
+ * - valores
+ * - metadata auxiliar (campos, picklists, orden)
+ *
+ * @author Manuel Cerioni
+ * @version 2.0.0
+ */
 public with sharing class KZ_ScoringConfigService {
 
     /* ========================= CLASES INTERNAS ========================= */
 
+    // Opción genérica para picklists
     public class PicklistOption {
         @AuraEnabled public String label;
         @AuraEnabled public String value;
         @AuraEnabled public String fieldType;
     }
 
+    // Información del campo seleccionado en un ítem
     public class FieldDetails {
         @AuraEnabled public String fieldType;
         @AuraEnabled public List<PicklistOption> picklistOptions;
@@ -18,6 +32,8 @@ public with sharing class KZ_ScoringConfigService {
 
     @AuraEnabled(cacheable=true)
     public static List<kzScoring__c> getScoringList() {
+
+        // Devuelve las últimas configuraciones creadas
         return [
             SELECT Id, Name, kzActive__c, kzDescription__c, CreatedDate
             FROM kzScoring__c
@@ -28,6 +44,8 @@ public with sharing class KZ_ScoringConfigService {
 
     @AuraEnabled
     public static kzScoring__c getConfig(Id recordId) {
+
+        // Si no hay id -> null
         if (recordId == null) {
             return null;
         }
@@ -47,6 +65,7 @@ public with sharing class KZ_ScoringConfigService {
             throw new AuraHandledException('Record is required');
         }
 
+        // Si se activa una config -> se desactivan las demás
         if (record.kzActive__c == true) {
 
             List<kzScoring__c> activeConfigs = [
@@ -77,6 +96,7 @@ public with sharing class KZ_ScoringConfigService {
 
         try {
 
+            // Primero elimina ítems y valores asociados
             List<kzItemScoring__c> items = [
                 SELECT Id
                 FROM kzItemScoring__c
@@ -98,6 +118,7 @@ public with sharing class KZ_ScoringConfigService {
                 delete items;
             }
 
+            // Por último elimina la configuración
             delete [
                 SELECT Id
                 FROM kzScoring__c
@@ -117,6 +138,7 @@ public with sharing class KZ_ScoringConfigService {
     @AuraEnabled(cacheable=true)
     public static List<kzItemScoring__c> getItemsByScoring(Id scoringId) {
 
+        // Si no hay scoring -> lista vacía
         if (scoringId == null) {
             return new List<kzItemScoring__c>();
         }
@@ -138,6 +160,7 @@ public with sharing class KZ_ScoringConfigService {
             throw new AuraHandledException('Item record is required');
         }
 
+        // Si no tiene orden -> asigna el siguiente
         if (item.kzOrder__c == null) {
             item.kzOrder__c = getNextItemOrder(item.kzScoring__c);
         }
@@ -155,6 +178,7 @@ public with sharing class KZ_ScoringConfigService {
 
         try {
 
+            // Elimina primero los valores del ítem
             List<kzScoringValue__c> values = [
                 SELECT Id
                 FROM kzScoringValue__c
@@ -184,6 +208,7 @@ public with sharing class KZ_ScoringConfigService {
     @AuraEnabled(cacheable=true)
     public static List<kzScoringValue__c> getValuesByItem(Id itemId) {
 
+        // Si no hay item -> lista vacía
         if (itemId == null) {
             return new List<kzScoringValue__c>();
         }
@@ -235,6 +260,7 @@ public with sharing class KZ_ScoringConfigService {
     @AuraEnabled(cacheable=true)
     public static Integer getNextItemOrder(Id scoringId) {
 
+        // Si no hay scoring -> empieza en 1
         if (scoringId == null) {
             return 1;
         }
@@ -261,6 +287,7 @@ public with sharing class KZ_ScoringConfigService {
             Schema.DescribeFieldResult d = fields.get(apiName).getDescribe();
             String lower = apiName.toLowerCase();
 
+            // Se filtran campos que no sirven para scoring
             if (d.isCalculated() ||
                 !d.isUpdateable() ||
                 lower.endsWith('id') ||
@@ -282,6 +309,7 @@ public with sharing class KZ_ScoringConfigService {
         return result;
     }
 
+    // Ordena los campos por label
     private class PicklistSorter implements Comparator<PicklistOption> {
         public Integer compare(PicklistOption a, PicklistOption b) {
             if (a.label == b.label) return 0;
@@ -297,6 +325,7 @@ public with sharing class KZ_ScoringConfigService {
         result.fieldType = 'TEXT';
         result.parentFieldPMP = 0;
 
+        // Si no hay item -> valores por defecto
         if (itemId == null) {
             return result;
         }
@@ -316,6 +345,7 @@ public with sharing class KZ_ScoringConfigService {
         result.fieldType = item.kzFieldType__c;
         result.parentFieldPMP = item.kzPMP__c;
 
+        // Si es picklist -> trae las opciones del campo
         if (result.fieldType == 'PICKLIST' &&
             item.kzLeadFieldApi__c != null) {
 

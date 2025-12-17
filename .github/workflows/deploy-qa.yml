@@ -1,0 +1,35 @@
+name: 'Deploy to QA Org'
+
+on:
+  push:
+    branches:
+      - qa
+
+jobs:
+  deploy:
+    name: 'Deploy metadata to QA'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout source code'
+        uses: actions/checkout@v4
+
+      - name: 'Install Salesforce CLI'
+        run: npm install -g sfdx-cli
+
+      - name: 'Authenticate to QA Org'
+        run: |
+          echo "${{ secrets.SF_SERVER_KEY }}" > server.key
+          sfdx force:auth:jwt:grant \
+            --clientid "${{ secrets.SF_CONSUMER_KEY }}" \
+            --jwtkeyfile server.key \
+            --username "${{ secrets.SF_QA_USERNAME }}" \
+            --instanceurl "${{ secrets.SF_INSTANCE_URL }}" \
+            --setalias QAOrg
+
+      - name: 'Deploy metadata to QA'
+        run: |
+          sfdx force:source:deploy \
+            --manifest manifest/package_deploy.xml \
+            --testlevel RunLocalTests \
+            -u QAOrg

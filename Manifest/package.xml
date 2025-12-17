@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>Lead.kzPuntuacionLead__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
+		<members>kzItemScoring__c</members>
+		<members>kzScoringValue__c</members>
+		<members>kzScoring__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>KZ_Scoring_Home</members>
+		<members>Candidato_Pagina_de_registro</members>
+		<name>FlexiPage</name>
+	</types>
+	<version>65.0</version>
+</Package>

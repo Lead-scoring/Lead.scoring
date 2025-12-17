@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>kzExactMatch__c</fullName>
+    <defaultValue>false</defaultValue>
+    <inlineHelpText>Sólo aplica si Item.FieldType = TEXT; si marca true se usará equals (case-insensitive), si false se usará contains.</inlineHelpText>
+    <label>Coincidencia Exacta</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

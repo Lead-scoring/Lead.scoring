@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>kzPuntuacionLead__c</fullName>
+    <defaultValue>0</defaultValue>
+    <description>Puntuación de Scoring calculada automáticamente por Apex (0-100%).</description>
+    <inlineHelpText>Porcentaje final de scoring calculado por el motor (0.00 - 100.00). Campo calculado por Trigger Apex (no editable por UI).</inlineHelpText>
+    <label>Puntuación Lead</label>
+    <precision>5</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Percent</type>
+</CustomField>

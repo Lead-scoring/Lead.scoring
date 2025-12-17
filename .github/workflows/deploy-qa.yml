@@ -11,22 +11,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Trae el código del repo
       - name: 'Checkout source code'
         uses: actions/checkout@v4
 
+      # 2. Instala Salesforce CLI
       - name: 'Install Salesforce CLI'
-        run: npm install -g sfdx-cli
+        run: |
+          npm install -g sfdx-cli
 
+      # 3. Autenticación por JWT contra SANDBOX (QA)
       - name: 'Authenticate to QA Org'
         run: |
           echo "${{ secrets.SF_SERVER_KEY }}" > server.key
+
           sfdx force:auth:jwt:grant \
             --clientid "${{ secrets.SF_CONSUMER_KEY }}" \
             --jwtkeyfile server.key \
             --username "${{ secrets.SF_QA_USERNAME }}" \
-            --instanceurl "${{ secrets.SF_INSTANCE_URL }}" \
+            --instanceurl https://test.salesforce.com \
             --setalias QAOrg
 
+      # 4. Deploy usando package.xml
       - name: 'Deploy metadata to QA'
         run: |
           sfdx force:source:deploy \

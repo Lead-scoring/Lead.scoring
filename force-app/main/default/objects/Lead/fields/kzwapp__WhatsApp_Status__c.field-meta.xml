@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>kzwapp__WhatsApp_Status__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Indicates the current WhatsApp delivery eligibility status for this phone number, based on API responses or internal validation logic.</description>
+    <inlineHelpText>Reflects whether the associated phone number can receive WhatsApp messages. This status is updated automatically based on message delivery results and API errors (e.g., unregistered numbers, blocked contacts, or policy restrictions).</inlineHelpText>
+    <label>WhatsApp Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>kzwapp__WhatsApp_Status</valueSetName>
+    </valueSet>
+</CustomField>

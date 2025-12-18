@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Repuestos</fullName>
+    <active>true</active>
+    <businessProcess>Standard Lead Process</businessProcess>
+    <description>Repuestos</description>
+    <label>Repuestos</label>
+    <picklistValues>
+        <picklist>Gama__c</picklist>
+        <values>
+            <fullName>Alta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baja</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Media</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>GenderIdentity</picklist>
+        <values>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nonbinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Listed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Industry</picklist>
+        <values>
+            <fullName>Agriculture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Apparel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banking</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Biotechnology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chemicals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Construction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Electronics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Energy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Entertainment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Environmental</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food %26 Beverage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Healthcare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hospitality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Machinery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manufacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Media</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not For Profit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recreation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shipping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telecommunications</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transportation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utilities</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>KZ_PurchaseDeadline__c</picklist>
+        <values>
+            <fullName>0-3 Meses</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3-6 Meses</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mas de 6 Meses</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LeadSource</picklist>
+        <values>
+            <fullName>Agentforce Lead Scoring</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Facebook Ad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Instagram Ad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partner Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>X %28ex Twitter%29 Ad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>YouTube Ad</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Name</picklist>
+        <values>
+            <fullName>Dr%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mr%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mrs%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ms%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mx%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prof%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Primary__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ProductInterest__c</picklist>
+        <values>
+            <fullName>A 180</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>A1 Sportback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A3 Sedan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AMG GT 63 S</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B 200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C 300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Camry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corolla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escape</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Explorer Platinum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Focus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ford Fiesta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ford Ka</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GLC 300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Land Cruiser</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M8 Competition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mustang Mach-E GT Performance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Q5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RAV4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RS7 Sportback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S 580</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Serie 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Serie 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Serie 7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supra GR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>X1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>X3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yaris</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Producto_de_Interes__c</picklist>
+        <values>
+            <fullName>A 180</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A1 Sportback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A3 Sedan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AMG GT 63 S</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B 200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C 300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Camry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corolla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Escape</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Explorer Platinum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Focus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ford Fiesta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ford Ka</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GLC 300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Land Cruiser</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M8 Competition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mustang Mach-E GT Performance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Q5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RAV4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RS7 Sportback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S 580</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Serie 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Serie 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Serie 7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supra GR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>X1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>X3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yaris</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Pronouns</picklist>
+        <values>
+            <fullName>He%2FHim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>He%2FThey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Listed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>She%2FHer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>She%2FThey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>They%2FThem</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rating</picklist>
+        <values>
+            <fullName>Cold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Warm</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>kzwapp__Primary__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>kzwapp__ProductInterest__c</picklist>
+        <values>
+            <fullName>GC1000 series</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GC3000 series</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GC5000 series</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>kzwapp__WhatsApp_Status__c</picklist>
+        <values>
+            <fullName>Blocked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invalid Format</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Allowed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Registered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Valid</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

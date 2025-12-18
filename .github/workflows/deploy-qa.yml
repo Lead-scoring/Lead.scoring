@@ -1,39 +1,41 @@
-name: 'Deploy to QA Org'
+# Nombre del workflow (lo vas a ver en la pestaña Actions)
+name: Deploy to QA Salesforce Org
 
+# Se ejecuta SOLO cuando hay un merge / push a la branch qa
 on:
   push:
     branches:
       - qa
 
+# Jobs del workflow
 jobs:
   deploy:
-    name: 'Deploy metadata to QA'
+    name: Deploy metadata to QA Org
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Trae el código del repo
-      - name: 'Checkout source code'
-        uses: actions/checkout@v4
+      # 1. Clona el repo
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
       # 2. Instala Salesforce CLI
-      - name: 'Install Salesforce CLI'
+      - name: Install Salesforce CLI
         run: |
-          npm install -g sfdx-cli
+          npm install sfdx-cli --global
 
-      # 3. Autenticación por JWT contra SANDBOX (QA)
-      - name: 'Authenticate to QA Org'
+      # 3. Autenticación por JWT contra la org QA
+      - name: Authenticate to QA Org
         run: |
           echo "${{ secrets.SF_SERVER_KEY }}" > server.key
-
           sfdx force:auth:jwt:grant \
             --clientid "${{ secrets.SF_CONSUMER_KEY }}" \
             --jwtkeyfile server.key \
-            --username "${{ secrets.SF_QA_USERNAME }}" \
-            --instanceurl https://test.salesforce.com \
+            --username "${{ secrets.SF_USERNAME }}" \
+            --instanceurl "${{ secrets.SF_INSTANCE_URL }}" \
             --setalias QAOrg
 
-      # 4. Deploy usando package.xml
-      - name: 'Deploy metadata to QA'
+      # 4. Deploy real usando package.xml
+      - name: Deploy to QA Org
         run: |
           sfdx force:source:deploy \
             --manifest manifest/package_deploy.xml \

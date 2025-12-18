@@ -1,11 +1,12 @@
 /**
  * Handler encargado de calcular el scoring del Lead
  * en base a la configuración activa de KZ Scoring.
+ * 
  *
  * Se ejecuta desde el trigger.
  *
  * @author Manuel Cerioni
- * @version 2.0.1
+ * @version 2.0.2
  */
 public with sharing class KZ_LeadScoringHandler {
 
@@ -13,7 +14,6 @@ public with sharing class KZ_LeadScoringHandler {
     private static final String TOKEN_IS_EMPTY = '__IS_EMPTY__';
     private static final String TOKEN_IS_NOT_EMPTY = '__IS_NOT_EMPTY__';
 
-    // Firma vieja -> se mantiene por compatibilidad
     public static void applyScoring(List<Lead> newList, Map<Id, Lead> oldMap) {
         applyScoring(newList);
     }

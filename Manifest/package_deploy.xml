@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
+		<members>KZ_DescribeService</members>
+		<members>KZ_ItemService</members>
+		<members>KZ_LeadScoringHandler</members>
+		<members>KZ_ScoringConfigService</members>
+		<members>KZ_ScoringHomeController</members>
+		<members>KZ_ValueService</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
 		<members>Lead.kzPuntuacionLead__c</members>
-        <members>Lead.KZ_Decisor__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>

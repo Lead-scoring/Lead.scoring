@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
+		<members>KZ_DescribeService</members>
+		<members>KZ_ItemService</members>
+		<members>KZ_LeadScoringHandler</members>
+		<members>KZ_ScoringConfigService</members>
+		<members>KZ_ScoringHomeController</members>
+		<members>KZ_ValueService</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
 		<members>Lead.KZ_Decisor__c</members>
 		<members>Lead.kzPuntuacionLead__c</members>
 		<name>CustomField</name>
+	</types>
+	<types>
+		<members>kzItemScoring__c</members>
+		<members>kzScoringValue__c</members>
+		<members>kzScoring__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>Candidato_Pagina_de_registro</members>
+		<members>KZ_Scoring_Home</members>
+		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>kzDynamicFieldForm</members>
+		<members>kzFieldValueForm</members>
+		<members>kzScoringFieldList</members>
+		<members>kzScoringForm</members>
+		<members>kzScoringList</members>
+		<members>kzScoringManager</members>
+		<name>LightningComponentBundle</name>
 	</types>
 	<version>65.0</version>
 </Package>

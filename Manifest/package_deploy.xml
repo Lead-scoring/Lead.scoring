@@ -2,6 +2,7 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
 		<members>Lead.kzPuntuacionLead__c</members>
+        <members>Lead.KZ_Decisor__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>
@@ -11,9 +12,18 @@
 		<name>CustomObject</name>
 	</types>
 	<types>
-		<members>KZ_Scoring_Home</members>
 		<members>Candidato_Pagina_de_registro</members>
+		<members>KZ_Scoring_Home</members>
 		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>kzDynamicFieldForm</members>
+		<members>kzFieldValueForm</members>
+		<members>kzScoringFieldList</members>
+		<members>kzScoringForm</members>
+		<members>kzScoringList</members>
+		<members>kzScoringManager</members>
+		<name>LightningComponentBundle</name>
 	</types>
 	<version>65.0</version>
 </Package>

@@ -11,6 +11,7 @@
 	</types>
 	<types>
 		<members>Lead.kzPuntuacionLead__c</members>
+		<members>Lead.KZ_Decisor__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>

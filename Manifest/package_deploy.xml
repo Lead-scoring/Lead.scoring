@@ -40,5 +40,11 @@
 		<members>Test_Lead</members>
 		<name>Queue</name>
 	</types>
+	<types>
+		<members>Cold_Leads</members>
+		<members>Hot_Leads</members>
+		<members>Test_Lead</members>
+		<name>QueueRoutingConfig</name>
+	</types>
 	<version>65.0</version>
 </Package>

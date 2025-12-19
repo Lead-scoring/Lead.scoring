@@ -12,6 +12,7 @@
 	<types>
 		<members>Lead.KZ_Decisor__c</members>
 		<members>Lead.kzPuntuacionLead__c</members>
+        <members>Lead.KZ_LeadBudget__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>

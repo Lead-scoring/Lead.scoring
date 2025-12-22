@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>kzScoring__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <inlineHelpText>Referencia al Scoring MAIN.</inlineHelpText>
+    <label>Scoring</label>
+    <referenceTo>kzScoring__c</referenceTo>
+    <relationshipLabel>Item Scorings</relationshipLabel>
+    <relationshipName>Item_Scorings</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

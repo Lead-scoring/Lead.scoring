@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <name>Test Lead</name>
+    <queueMembers>
+        <users>
+            <user>amir.aguirre798@agentforce.com</user>
+        </users>
+    </queueMembers>
+    <queueRoutingConfig>Test_Lead</queueRoutingConfig>
+    <queueSobject>
+        <sobjectType>Lead</sobjectType>
+    </queueSobject>
+</Queue>

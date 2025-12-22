@@ -1,16 +1,20 @@
-# Nombre del workflow (lo vas a ver en la pestaña Actions)
+# Nombre del workflow
 name: Deploy to QA Salesforce Org
 
-# Se ejecuta SOLO cuando hay un merge / push a la branch qa
+# Se ejecuta en push a QA o en Pull Request hacia QA
 on:
   push:
     branches:
       - qa
+  pull_request:
+    branches:
+      - qa
+    types: [opened, synchronize, reopened]
 
 # Jobs del workflow
 jobs:
   deploy:
-    name: Deploy metadata to QA Org
+    name: Manage Metadata (Validate or Deploy)
     runs-on: ubuntu-latest
 
     steps:
@@ -34,10 +38,27 @@ jobs:
             --instanceurl "${{ secrets.SF_INSTANCE_URL }}" \
             --setalias QAOrg
 
-      # 4. Deploy real usando package.xml
-      - name: Deploy to QA Org
+      # -----------------------------------------------------------------------
+      # 4. VALIDACIÓN (Check Only) - Solo se ejecuta si es una Pull Request
+      # -----------------------------------------------------------------------
+      - name: Validate Deploy (Check Only)
+        if: github.event_name == 'pull_request'
         run: |
           sfdx force:source:deploy \
-            --manifest manifest/package_deploy.xml \
-            --testlevel RunLocalTests \
+            --manifest Manifest/package_deploy.xml \
+            --testlevel RunSpecifiedTests \
+            --runtests LeadSenderServiceTest,OAuthTokenServiceTest,KZ_DescribeServiceTest,KZ_ItemServiceTest,KZ_ScoringHomeControllerTest,KZ_ValueServiceTest,KZ_LeadScoringHandlerTest,KZ_ScoringConfigServiceTest \
+            --checkonly \
+            -u QAOrg
+
+      # -----------------------------------------------------------------------
+      # 5. DEPLOY REAL - Solo se ejecuta si es un Push (Merge) a QA
+      # -----------------------------------------------------------------------
+      - name: Deploy to QA Org
+        if: github.event_name == 'push'
+        run: |
+          sfdx force:source:deploy \
+            --manifest Manifest/package_deploy.xml \
+            --testlevel RunSpecifiedTests \
+            --runtests LeadSenderServiceTest,OAuthTokenServiceTest,KZ_DescribeServiceTest,KZ_ItemServiceTest,KZ_ScoringHomeControllerTest,KZ_ValueServiceTest,KZ_LeadScoringHandlerTest,KZ_ScoringConfigServiceTest \
             -u QAOrg

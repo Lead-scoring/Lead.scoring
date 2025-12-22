@@ -50,6 +50,7 @@
 		<name>CustomObject</name>
 	</types>
 	<types>
+		<members>Interacci_n_de_Instagram__c</members>
 		<members>KZ_Scoring_Home</members>
 		<name>CustomTab</name>
 	</types>

@@ -44,9 +44,18 @@ export default class KzScoringForm extends LightningElement {
     handleActive(e) { this.active = e.target.checked; }
 
     async handleSave() {
-        const rec = { Id: this._configId, Name: this.name, kzActive__c: this.active };
+        // Creamos el objeto (puedes dejar el nombre de la variable 'rec' aquí)
+        const rec = { 
+            Id: this._configId, 
+            Name: this.name, 
+            kzActive__c: this.active,
+            sobjectType: 'kzScoring__c' // Es buena práctica incluir esto para Apex
+        };
+
         try {
-            const id = await saveConfig({ rec: rec });
+            // CAMBIO AQUÍ: Cambiamos 'rec:' por 'record:' para que coincida con Apex
+            const id = await saveConfig({ record: rec }); 
+            
             const returnedId = id || this._configId;
             this.dispatchEvent(new CustomEvent('saved', { detail: { id: returnedId }, bubbles: true, composed: true }));
             this.dispatchEvent(new ShowToastEvent({ title: 'Guardado', message: 'Configuración guardada', variant: 'success' }));

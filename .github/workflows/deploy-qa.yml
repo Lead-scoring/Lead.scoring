@@ -42,11 +42,12 @@ jobs:
       # 4. VALIDACIÓN (Check Only) - Solo se ejecuta si es una Pull Request
       # -----------------------------------------------------------------------
       - name: Validate Deploy (Check Only)
-        if: github.event_name == 'pull_request'  # <--- Condición clave
+        if: github.event_name == 'pull_request'
         run: |
           sfdx force:source:deploy \
             --manifest Manifest/package_deploy.xml \
-            --testlevel RunLocalTests \
+            --testlevel RunSpecifiedTests \
+            --runtests LeadSenderServiceTest,OAuthTokenServiceTest \
             --checkonly \
             -u QAOrg
 
@@ -54,9 +55,10 @@ jobs:
       # 5. DEPLOY REAL - Solo se ejecuta si es un Push (Merge) a QA
       # -----------------------------------------------------------------------
       - name: Deploy to QA Org
-        if: github.event_name == 'push'          # <--- Condición clave
+        if: github.event_name == 'push'
         run: |
           sfdx force:source:deploy \
             --manifest Manifest/package_deploy.xml \
-            --testlevel RunLocalTests \
+            --testlevel RunSpecifiedTests \
+            --runtests LeadSenderServiceTest,OAuthTokenServiceTest \
             -u QAOrg

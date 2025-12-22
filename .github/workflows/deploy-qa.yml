@@ -6,10 +6,10 @@ on:
   push:
     branches:
       - qa
-  pull_request:              # <--- NUEVO: Trigger para Pull Requests
+  pull_request:
     branches:
       - qa
-    types: [opened, synchronize, reopened] # Se ejecuta al crear, actualizar o reabrir la PR
+    types: [opened, synchronize, reopened]
 
 # Jobs del workflow
 jobs:
@@ -47,7 +47,7 @@ jobs:
           sfdx force:source:deploy \
             --manifest Manifest/package_deploy.xml \
             --testlevel RunSpecifiedTests \
-            --runtests LeadSenderServiceTest,OAuthTokenServiceTest \
+            --runtests LeadSenderServiceTest,OAuthTokenServiceTest,KZ_DescribeServiceTest,KZ_ItemServiceTest,KZ_ScoringHomeControllerTest,KZ_ValueServiceTest,KZ_LeadScoringHandlerTest,KZ_ScoringConfigServiceTest \
             --checkonly \
             -u QAOrg
 
@@ -60,5 +60,5 @@ jobs:
           sfdx force:source:deploy \
             --manifest Manifest/package_deploy.xml \
             --testlevel RunSpecifiedTests \
-            --runtests LeadSenderServiceTest,OAuthTokenServiceTest \
+            --runtests LeadSenderServiceTest,OAuthTokenServiceTest,KZ_DescribeServiceTest,KZ_ItemServiceTest,KZ_ScoringHomeControllerTest,KZ_ValueServiceTest,KZ_LeadScoringHandlerTest,KZ_ScoringConfigServiceTest \
             -u QAOrg

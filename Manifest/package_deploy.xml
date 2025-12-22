@@ -44,15 +44,20 @@
 		<name>CustomField</name>
 	</types>
 	<types>
+		<members>Cotizaciones__c</members>
 		<members>Interacci_n_de_Instagram__c</members>
+		<members>Sales_Target__c</members>
 		<members>kzItemScoring__c</members>
 		<members>kzScoringValue__c</members>
 		<members>kzScoring__c</members>
 		<name>CustomObject</name>
 	</types>
 	<types>
+		<members>Cotizaciones__c</members>
 		<members>Interacci_n_de_Instagram__c</members>
 		<members>KZ_Scoring_Home</members>
+		<members>Sales_Target__c</members>
+		<members>kzScoring__c</members>
 		<name>CustomTab</name>
 	</types>
 	<types>

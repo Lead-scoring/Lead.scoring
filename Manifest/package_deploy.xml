@@ -16,6 +16,10 @@
 		<name>ApexClass</name>
 	</types>
 	<types>
+		<members>KZ_LeadTrigger</members>
+		<name>ApexTrigger</name>
+	</types>
+	<types>
 		<members>standard__LightningSales</members>
 		<name>CustomApplication</name>
 	</types>

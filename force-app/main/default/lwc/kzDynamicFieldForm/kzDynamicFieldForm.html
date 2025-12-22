@@ -1,12 +1,10 @@
-
 <template>
     <lightning-card title="Detalles del Campo">
         <div class="slds-p-around_medium">
             <lightning-layout vertical-align="start" horizontal-align="space">
-                <!-- Columna izquierda -->
                 <lightning-layout-item size="6" padding="around-small">
                     <h3 class="slds-text-heading_small slds-m-bottom_medium">Datos del Campo</h3>
-
+                    
                     <lightning-combobox
                         label="Campo Lead"
                         value={apiField}
@@ -17,98 +15,46 @@
                     </lightning-combobox>
 
                     <template if:true={isEditMode}>
-                        <lightning-input
-                            label="API Name"
-                            value={apiField}
-                            readonly
-                            class="slds-m-top_small">
-                        </lightning-input>
+                        <lightning-input label="API Name" value={apiField} readonly class="slds-m-top_small"></lightning-input>
                     </template>
-
-                    <lightning-input
-                        label="Etiqueta (Name)"
-                        value={label}
-                        onchange={handleLabel}
-                        required
-                        maxlength="80"
-                        class="slds-m-top_small">
-                    </lightning-input>
-
-                    <lightning-input
-                        label="PMP (Puntaje Máximo Potencial)"
-                        type="number"
-                        value={pmp}
-                        onchange={handlePmp}
-                        required
-                        min="0"
-                        class="slds-m-top_small">
-                    </lightning-input>
-
-                    <lightning-input
-                        label="Orden"
-                        type="number"
-                        value={order}
-                        readonly
-                        class="slds-m-top_small">
-                    </lightning-input>
-
-                    <lightning-input
-                        type="checkbox"
-                        label="Activo"
-                        checked={active}
-                        onchange={handleActive}
-                        class="slds-m-top_small">
-                    </lightning-input>
+                    
+                    <lightning-input label="Etiqueta (Name)" value={label} onchange={handleLabel} required maxlength="80" class="slds-m-top_small"></lightning-input>
+                    
+                    <lightning-input label="PMP (Puntaje Máximo Potencial)" type="number" value={pmp} onchange={handlePmp} required min="0" class="slds-m-top_small"></lightning-input>
+                    
+                    <!-- FIX 2: Campo Orden como solo lectura -->
+                    <lightning-input label="Orden" type="number" value={order} onchange={handleOrder} min="0" readonly class="slds-m-top_small"></lightning-input>
+                    
+                    <lightning-input type="checkbox" label="Activo" checked={active} onchange={handleActive} class="slds-m-top_small"></lightning-input>
 
                     <template if:true={showPmpNote}>
                         <p class="slds-text-color_weak slds-m-top_small slds-text-body_small">
-                            * El PMP indica el puntaje que se otorgará si el campo tiene valor.
+                            * El PMP indica el puntaje que se otorgara si el campo cuanta con un valor, de lo contrario se le otorga 0 puntos
                         </p>
                     </template>
+
                 </lightning-layout-item>
 
-                <!-- Columna derecha -->
                 <lightning-layout-item size="6" padding="around-small">
                     <h3 class="slds-text-heading_small slds-m-bottom_medium">Detalles y Pregunta</h3>
-
-                    <lightning-textarea
-                        label="Descripción"
-                        value={description}
-                        onchange={handleDescription}
-                        class="slds-m-top_small">
-                    </lightning-textarea>
-
-                    <lightning-textarea
-                        label="Pregunta para el Agente (Opcional)"
-                        value={question}
-                        onchange={handleQuestion}
-                        class="slds-m-top_small"
-                        placeholder="Ej: ¿El cliente tiene un presupuesto aprobado?">
-                    </lightning-textarea>
-
-                    <template if:true={showDataTypeField}>
-                        <lightning-input
-                            label="Tipo de Dato"
-                            value={dataType}
-                            readonly
-                            class="slds-m-top_small">
-                        </lightning-input>
+                    
+                    <lightning-textarea label="Descripción" value={description} onchange={handleDescription} class="slds-m-top_small"></lightning-textarea>
+                    
+                    <lightning-textarea label="Pregunta para el Agente (Opcional)" value={question} onchange={handleQuestion} class="slds-m-top_small"
+                                        placeholder="Ej: ¿El cliente tiene un presupuesto aprobado?"></lightning-textarea>
+                    
+                    <!-- FIX 1: Mostrar Tipo de Dato solo si se ha seleccionado un campo -->
+                    <template if:true={showDataTypeField}> 
+                        <lightning-input label="Tipo de Dato" value={dataType} readonly class="slds-m-top_small"></lightning-input>
                     </template>
+
                 </lightning-layout-item>
             </lightning-layout>
         </div>
 
-        <div slot="footer" class="slds-grid slds-grid_align-end">
-            <lightning-button
-                label="Cancelar"
-                onclick={handleCancel}
-                class="slds-m-right_small">
-            </lightning-button>
-            <lightning-button
-                variant="brand"
-                label="Guardar"
-                onclick={handleSave}>
-            </lightning-button>
+        <div slot="footer" class="slds-m-top_large slds-grid slds-grid_align-end">
+            <lightning-button label="Cancelar" onclick={handleCancel} class="slds-m-right_small"></lightning-button>
+            <lightning-button variant="brand" label="Guardar" onclick={handleSave}></lightning-button>
         </div>
     </lightning-card>
 </template>

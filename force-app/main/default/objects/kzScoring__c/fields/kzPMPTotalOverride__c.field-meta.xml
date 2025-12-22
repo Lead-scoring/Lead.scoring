@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>kzPMPTotalOverride__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Si se define, el handler usará este PMP total en vez de sumar los PMP por ítem. Dejar vacío para usar suma de items.</inlineHelpText>
+    <label>PMP Total</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

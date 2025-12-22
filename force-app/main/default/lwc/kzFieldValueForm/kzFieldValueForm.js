@@ -274,7 +274,9 @@ export default class KzFieldValueForm extends LightningElement {
             this.exactMatch = true;
         }
 
+        // Construcción del objeto con sobjectType y nombres de campos correctos
         const rec = {
+            sobjectType: 'kzScoringValue__c',
             Id: this.editingId,
             kzItemScoring__c: this.fieldId,
             kzValueText__c: value,
@@ -285,7 +287,9 @@ export default class KzFieldValueForm extends LightningElement {
         };
 
         try {
-            await saveValue({ val: rec });
+            // REEMPLAZO CLAVE: Se cambia 'val' por 'value' para coincidir con el Apex
+            await saveValue({ value: rec }); 
+            
             this.dispatchEvent(new ShowToastEvent({ title: 'Guardado', message: 'Valor guardado', variant: 'success' }));
             this.showForm = false;
             this.editingId = null;

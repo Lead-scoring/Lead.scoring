@@ -11,108 +11,153 @@ export default class KzDynamicFieldForm extends LightningElement {
 
     @track label = '';
     @track apiField = '';
-    @track dataType = '';
+    @track dataType = ''; 
     @track pmp = 0;
     @track order = 0;
     @track active = true;
     @track description = '';
     @track question = '';
-
-    @track leadFieldOptions = [];
+    
     @track isEditMode = false;
+    @track isLoadingFields = false;
+    @track leadFieldOptions = [];
+    
+    typeOptions = [
+        { label: 'Picklist', value: 'PICKLIST' },
+        { label: 'Texto',    value: 'TEXT' },
+        { label: 'Checkbox', value: 'CHECKBOX' },
+        { label: 'Número',   value: 'NUMBER' },
+        { label: 'Fecha',    value: 'DATE' },
+        { label: 'Email',    value: 'EMAIL' },
+        { label: 'Teléfono', value: 'PHONE' }
+    ];
 
     connectedCallback() {
         this.isEditMode = !!this.fieldId;
-        if (this.isEditMode) {
+        if (this.fieldId) {
             this.loadItem();
         } else {
             this.loadNextOrder();
         }
     }
-
+    
     @wire(getAllLeadFieldsForScoring)
-    wiredLeadFields({ data, error }) {
+    wiredLeadFields({ error, data }) {
+        this.isLoadingFields = true;
         if (data) {
             this.leadFieldOptions = data;
+            this.isLoadingFields = false;
         } else if (error) {
-            this.showError('No se pudieron cargar los campos del Lead');
-            console.error(error);
+            console.error('Error al cargar campos del Lead:', error);
+            this.dispatchEvent(new ShowToastEvent({ title: 'Error de Carga', message: 'No se pudo cargar la lista de campos del Lead.', variant: 'error' }));
+            this.isLoadingFields = false;
         }
     }
 
+    get showApiField() { return true; }
+    get showDataType() { return false; }
+    
     get showDataTypeField() {
-        return !!this.apiField;
+        return !!this.apiField; 
     }
 
     get showPmpNote() {
-        const type = (this.dataType || 'TEXT').toUpperCase();
-        return ['TEXT', 'EMAIL', 'PHONE', 'DATE'].includes(type);
+        if (!this.apiField) return false;
+        const t = (this.dataType || 'TEXT').toUpperCase();
+        return (t === 'TEXT' || t === 'EMAIL' || t === 'PHONE' || t === 'DATE');
     }
 
     async loadNextOrder() {
         if (!this.scoringId) return;
         try {
-            this.order = await getNextItemOrder({ scoringId: this.scoringId }) || 1;
-        } catch (e) {
+            const nextOrder = await getNextItemOrder({ scoringId: this.scoringId });
+            this.order = nextOrder || 1;
+        } catch (err) {
+            console.error('Error al cargar orden', err);
             this.order = 1;
-            console.error(e);
         }
     }
 
-    async loadItem() {
-        try {
-            const res = await getItemById({ itemId: this.fieldId });
-            if (!res) return;
-
-            this.label = res.Name || '';
-            this.apiField = res.kzLeadFieldApi__c || '';
-            this.dataType = res.kzFieldType__c || '';
-            this.pmp = res.kzPMP__c || 0;
-            this.order = res.kzOrder__c || 0;
-            this.active = res.kzActive__c === true;
-            this.description = res.kzDescription__c || '';
-            this.question = res.kzQuestionAgent__c || '';
-        } catch (e) {
-            this.showError('No se pudo cargar el campo');
-            console.error(e);
-        }
-    }
-
-    handleFieldSelected(event) {
-        const apiName = event.detail.value;
-        if (!apiName) return;
-
-        const field = this.leadFieldOptions.find(f => f.value === apiName);
-        if (!field) return;
-
-        this.apiField = field.value;
-        this.dataType = field.fieldType;
-
-        const cleanLabel = field.label.replace(/\s\([^)]+\)$/, '');
-        this.label = cleanLabel.length > 80 ? cleanLabel.substring(0, 77) + '...' : cleanLabel;
+    loadItem() {
+        getItemById({ itemId: this.fieldId })
+            .then(res => {
+                if (res) {
+                    this.label = res.Name;
+                    this.apiField = res.kzLeadFieldApi__c;
+                    this.dataType = res.kzFieldType__c || ''; 
+                    this.pmp = res.kzPMP__c || 0;
+                    this.order = res.kzOrder__c || 0;
+                    this.active = res.kzActive__c === true;
+                    this.description = res.kzDescription__c || '';
+                    this.question = res.kzQuestionAgent__c || '';
+                }
+            })
+            .catch(err => {
+                const msg = err?.body?.message || err?.message || JSON.stringify(err);
+                this.dispatchEvent(new ShowToastEvent({ title: 'Error al cargar', message: msg, variant: 'error' }));
+                console.error('getItemById error:', err);
+            });
     }
 
     handleLabel(e) { this.label = e.target.value; }
-    handlePmp(e) { this.pmp = Number(e.target.value) || 0; }
+    handleApiField(e) { /* readonly */ }
+    handleType(e) { /* este handler ya no se usa, el campo es readonly */ } 
+    handlePmp(e) { this.pmp = parseFloat(e.target.value) || 0; }
+    handleOrder(e) { /* La propiedad readonly del HTML lo asegura */ } 
     handleActive(e) { this.active = e.target.checked; }
     handleDescription(e) { this.description = e.target.value; }
     handleQuestion(e) { this.question = e.target.value; }
+    
+    handleFieldSelected(event) {
+        const selectedApiName = event.detail.value;
+        
+        if (!selectedApiName) {
+            this.apiField = '';
+            this.dataType = '';
+            this.label = '';
+            return;
+        }
+
+        const selectedField = this.leadFieldOptions.find(opt => opt.value === selectedApiName);
+
+        if (selectedField) {
+            const cleanLabel = selectedField.label.replace(/\s\([^)]+\)$/, '');
+            const fieldType = selectedField.fieldType;
+
+            this.label = cleanLabel;
+            this.apiField = selectedField.value;
+            this.dataType = fieldType;
+
+            if (this.label.length > 80) {
+                this.label = this.label.substring(0, 77) + '...';
+            }
+        }
+    }
 
     async handleSave() {
-        const requiredInputs = this.template.querySelectorAll('[required]');
-        let valid = true;
-        requiredInputs.forEach(i => {
-            i.reportValidity();
-            valid = valid && i.checkValidity();
-        });
+        // Lógica de validación
+        const inputFields = [
+            ...this.template.querySelectorAll('lightning-input'),
+            ...this.template.querySelectorAll('lightning-combobox'),
+        ].filter(cmp => cmp.required);
 
-        if (!valid) {
-            this.showError('Complete los campos requeridos');
+        const allValid = inputFields.reduce((validSoFar, inputCmp) => {
+            inputCmp.reportValidity();
+            return validSoFar && inputCmp.checkValidity();
+        }, true);
+
+        if (!allValid) {
+            this.dispatchEvent(new ShowToastEvent({ title: 'Validación Fallida', message: 'Por favor, revise los campos marcados como requeridos.', variant: 'error' }));
+            return;
+        }
+        
+        if (!this.apiField) {
+            this.dispatchEvent(new ShowToastEvent({ title: 'Validación Crítica', message: 'Debe seleccionar un campo Lead válido.', variant: 'error' }));
             return;
         }
 
         if (this.pmp < 0) {
-            this.showError('El PMP debe ser mayor o igual a 0');
+            this.dispatchEvent(new ShowToastEvent({ title: 'Validación', message: 'El PMP debe ser cero o positivo.', variant: 'error' }));
             return;
         }
 
@@ -121,7 +166,7 @@ export default class KzDynamicFieldForm extends LightningElement {
             kzScoring__c: this.scoringId,
             Name: this.label,
             kzLeadFieldApi__c: this.apiField,
-            kzFieldType__c: this.dataType,
+            kzFieldType__c: this.dataType, 
             kzPMP__c: this.pmp,
             kzOrder__c: this.order,
             kzActive__c: this.active,
@@ -131,23 +176,24 @@ export default class KzDynamicFieldForm extends LightningElement {
 
         try {
             await saveItem({ item: rec });
+            // Notificación y navegación
             this.dispatchEvent(new CustomEvent('saved', { bubbles: true, composed: true }));
-            this.showSuccess('Campo guardado correctamente');
-        } catch (e) {
-            this.showError(e?.body?.message || 'Error al guardar');
-            console.error(e);
+            this.dispatchEvent(new ShowToastEvent({ title: 'Guardado', message: 'Campo guardado exitosamente.', variant: 'success' }));
+        } catch (err) {
+            console.error('saveItem error raw:', err);
+            let msg = 'Error al guardar';
+            if (err?.body?.message) {
+                msg = err.body.message;
+            } else if (err?.message) {
+                msg = err.message;
+            } else {
+                msg = JSON.stringify(err);
+            }
+            this.dispatchEvent(new ShowToastEvent({ title: 'Error', message: msg, variant: 'error' }));
         }
     }
 
-    handleCancel() {
-        this.dispatchEvent(new CustomEvent('cancel', { bubbles: true, composed: true }));
-    }
-
-    showError(message) {
-        this.dispatchEvent(new ShowToastEvent({ title: 'Error', message, variant: 'error' }));
-    }
-
-    showSuccess(message) {
-        this.dispatchEvent(new ShowToastEvent({ title: 'Éxito', message, variant: 'success' }));
+    handleCancel() {  
+        this.dispatchEvent(new CustomEvent('cancel', { bubbles: true, composed: true }));  
     }
 }

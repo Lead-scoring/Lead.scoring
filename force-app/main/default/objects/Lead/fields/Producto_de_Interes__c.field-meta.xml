@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Producto_de_Interes__c</fullName>
+    <label>Producto/s de Interés</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>A 180</fullName>
+                <default>false</default>
+                <label>A 180</label>
+            </value>
+            <value>
+                <fullName>B 200</fullName>
+                <default>false</default>
+                <label>B 200</label>
+            </value>
+            <value>
+                <fullName>C 300</fullName>
+                <default>false</default>
+                <label>C 300</label>
+            </value>
+            <value>
+                <fullName>GLC 300</fullName>
+                <default>false</default>
+                <label>GLC 300</label>
+            </value>
+            <value>
+                <fullName>S 580</fullName>
+                <default>false</default>
+                <label>S 580</label>
+            </value>
+            <value>
+                <fullName>AMG GT 63 S</fullName>
+                <default>false</default>
+                <label>AMG GT 63 S</label>
+            </value>
+            <value>
+                <fullName>A1 Sportback</fullName>
+                <default>false</default>
+                <label>A1 Sportback</label>
+            </value>
+            <value>
+                <fullName>A3 Sedan</fullName>
+                <default>false</default>
+                <label>A3 Sedan</label>
+            </value>
+            <value>
+                <fullName>A4</fullName>
+                <default>false</default>
+                <label>A4</label>
+            </value>
+            <value>
+                <fullName>Q5</fullName>
+                <default>false</default>
+                <label>Q5</label>
+            </value>
+            <value>
+                <fullName>A8</fullName>
+                <default>false</default>
+                <label>A8</label>
+            </value>
+            <value>
+                <fullName>RS7 Sportback</fullName>
+                <default>false</default>
+                <label>RS7 Sportback</label>
+            </value>
+            <value>
+                <fullName>Ford Ka</fullName>
+                <default>false</default>
+                <label>Ford Ka</label>
+            </value>
+            <value>
+                <fullName>Ford Fiesta</fullName>
+                <default>false</default>
+                <label>Ford Fiesta</label>
+            </value>
+            <value>
+                <fullName>Focus</fullName>
+                <default>false</default>
+                <label>Focus</label>
+            </value>
+            <value>
+                <fullName>Escape</fullName>
+                <default>false</default>
+                <label>Escape</label>
+            </value>
+            <value>
+                <fullName>Explorer Platinum</fullName>
+                <default>false</default>
+                <label>Explorer Platinum</label>
+            </value>
+            <value>
+                <fullName>Mustang Mach-E GT Performance</fullName>
+                <default>false</default>
+                <label>Mustang Mach-E GT Performance</label>
+            </value>
+            <value>
+                <fullName>Yaris</fullName>
+                <default>false</default>
+                <label>Yaris</label>
+            </value>
+            <value>
+                <fullName>Corolla</fullName>
+                <default>false</default>
+                <label>Corolla</label>
+            </value>
+            <value>
+                <fullName>Camry</fullName>
+                <default>false</default>
+                <label>Camry</label>
+            </value>
+            <value>
+                <fullName>RAV4</fullName>
+                <default>false</default>
+                <label>RAV4</label>
+            </value>
+            <value>
+                <fullName>Land Cruiser</fullName>
+                <default>false</default>
+                <label>Land Cruiser</label>
+            </value>
+            <value>
+                <fullName>Supra GR</fullName>
+                <default>false</default>
+                <label>Supra GR</label>
+            </value>
+            <value>
+                <fullName>Serie 1</fullName>
+                <default>false</default>
+                <label>Serie 1</label>
+            </value>
+            <value>
+                <fullName>X1</fullName>
+                <default>false</default>
+                <label>X1</label>
+            </value>
+            <value>
+                <fullName>Serie 3</fullName>
+                <default>false</default>
+                <label>Serie 3</label>
+            </value>
+            <value>
+                <fullName>X3</fullName>
+                <default>false</default>
+                <label>X3</label>
+            </value>
+            <value>
+                <fullName>Serie 7</fullName>
+                <default>false</default>
+                <label>Serie 7</label>
+            </value>
+            <value>
+                <fullName>M8 Competition</fullName>
+                <default>false</default>
+                <label>M8 Competition</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

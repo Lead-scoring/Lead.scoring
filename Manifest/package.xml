@@ -44,6 +44,7 @@
 		<name>CustomField</name>
 	</types>
 	<types>
+		<members>Interacci_n_de_Instagram__c</members>
 		<members>kzItemScoring__c</members>
 		<members>kzScoringValue__c</members>
 		<members>kzScoring__c</members>

@@ -16,6 +16,10 @@
 		<name>ApexClass</name>
 	</types>
 	<types>
+		<members>standard__LightningSales</members>
+		<name>CustomApplication</name>
+	</types>
+	<types>
 		<members>Lead.Budget__c</members>
 		<members>Lead.Calificaci_n_de_la_Atenci_n__c</members>
 		<members>Lead.CurrentGenerators__c</members>
@@ -44,6 +48,10 @@
 		<members>kzScoringValue__c</members>
 		<members>kzScoring__c</members>
 		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>KZ_Scoring_Home</members>
+		<name>CustomTab</name>
 	</types>
 	<types>
 		<members>Candidato_Pagina_de_registro</members>

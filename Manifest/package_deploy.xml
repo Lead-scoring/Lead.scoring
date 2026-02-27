@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
+		<members>Lead.KzCiudad__c</members>
+		<name>CustomField</name>
+	</types>
+	<version>65.0</version>
+</Package><?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
 		<members>KZ_DescribeService</members>
 		<members>KZ_DescribeServiceTest</members>
 		<members>KZ_ItemService</members>
@@ -44,8 +51,9 @@
 		<members>Lead.Tiempo_Primera_Respuesta_Minutos__c</members>
 		<members>Lead.Tiempo_primera_respuesta__c</members>
 		<members>Lead.Tiempo_resoluci_n__c</members>
-		<members>Lead.kzPuntuacionLead__c</members>
 		<members>Lead.kzInterestLevel__c</members>
+		<members>Lead.kzPuntuacionLead__c</members>
+		<members>Lead.KzCiudad__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>

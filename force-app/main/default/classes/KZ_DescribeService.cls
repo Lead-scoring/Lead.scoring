@@ -5,7 +5,7 @@
  * @author Manuel Cerioni
  * @version 1.0.0
  * @since 2025-12-04
- */
+ **/
 public with sharing class KZ_DescribeService {
 
     /**

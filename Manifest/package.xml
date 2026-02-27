@@ -45,6 +45,7 @@
 		<members>Lead.Tiempo_primera_respuesta__c</members>
 		<members>Lead.Tiempo_resoluci_n__c</members>
 		<members>Lead.kzPuntuacionLead__c</members>
+		<members>Lead.kzInterestLevel__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>

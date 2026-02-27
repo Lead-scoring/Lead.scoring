@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>KzCiudad__c</fullName>
+    <label>Ciudad</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Mar del Plata</fullName>
+                <default>false</default>
+                <label>Mar del Plata</label>
+            </value>
+            <value>
+                <fullName>Correa</fullName>
+                <default>false</default>
+                <label>Correa</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
